@@ -49,10 +49,11 @@ namespace dxfw
 			return (pScene == &current);
 		});
 
+		it->OnUnload();
+
 		if (it != m_scenes.end())
 		{
 			CScene& s = m_scenes.back();
-			s.OnUnload();
 			std::swap(*it, s);
 			m_scenes.pop_back();
 		}
