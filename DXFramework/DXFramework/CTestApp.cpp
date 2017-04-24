@@ -86,7 +86,7 @@ void CTestApp::Start()
 					pTrans->SetWorldMatrix(DirectX::XMMatrixIdentity() * DirectX::XMMatrixScaling(cubeScale, cubeScale, cubeScale) * DirectX::XMMatrixTranslation(x * offset, groundOffsetY, y * offset));
 					CMeshRenderer* pMeshRenderer = obj.AddComponent<CMeshRenderer>();
 					pMeshRenderer->SetModelFileName("res/model_cube.obj");
-					pMeshRenderer->SetTextureFileName("res/tex_metal_overlaping_plates_bolted_basecolor.png");
+					pMeshRenderer->SetTextureFileName("res/tex_metal_diffuse.png");
 					pMeshRenderer->SetShaderFileName(EShaderType::VertexShader, "shader/basic_vs.fx");
 					pMeshRenderer->SetShaderFileName(EShaderType::PixelShader, "shader/basic_ps.fx");
 				}

@@ -322,9 +322,7 @@ void CGraphics::LoadResources()
 
 	m_pResourceManager->LoadTexture("res/tex_cube_diffuse.tga");
 	m_pResourceManager->LoadTexture("res/tex_golem_diffuse.png");
-	m_pResourceManager->LoadTexture("res/tex_golem_normal.png");
-	m_pResourceManager->LoadTexture("res/tex_brick_lumpy_basecolor.png");
-	m_pResourceManager->LoadTexture("res/tex_metal_overlaping_plates_bolted_basecolor.png");
+	m_pResourceManager->LoadTexture("res/tex_metal_diffuse.png");
 }
 
 void CGraphics::InitShadersAndBuffers()
