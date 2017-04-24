@@ -4,43 +4,47 @@
 #include "CSysWindow.h"
 #include "EShaderType.h"
 #include "EInputLayoutType.h"
-class CInputLayout;
 #include "CInputLayout.h"
 
-class CShader
+namespace dxfw
 {
-public:
-	CShader(const wchar_t* filePath, const char* entryPoint, EShaderType type, CGraphics* pGraphics, CSysWindow* pSysWindow);
-	~CShader();
+	class CInputLayout;
 
-	void Compile();
-	void Bind();
-	void Unbind();
-	CInputLayout* CreateInputLayout(EInputLayoutType inputLayoutType, D3D_PRIMITIVE_TOPOLOGY topology);
+	class CShader
+	{
+	public:
+		CShader(const wchar_t* filePath, const char* entryPoint, EShaderType type, CGraphics* pGraphics, CSysWindow* pSysWindow);
+		~CShader();
 
-	ID3DBlob* GetShaderBlob();
-	ID3D11VertexShader* GetVertexShader();
-	ID3D11PixelShader* GetPixelShader();
+		void Compile();
+		void Bind();
+		void Unbind();
+		CInputLayout* CreateInputLayout(EInputLayoutType inputLayoutType, D3D_PRIMITIVE_TOPOLOGY topology);
 
-	CInputLayout* GetInputLayout() { return m_pInputLayout; }
+		ID3DBlob* GetShaderBlob();
+		ID3D11VertexShader* GetVertexShader();
+		ID3D11PixelShader* GetPixelShader();
 
-private:
-	CShader();
-	CShader(const CShader& other);
+		CInputLayout* GetInputLayout() { return m_pInputLayout; }
 
-private:
-	const wchar_t* m_filePath;
-	const char* m_entryPoint;
-	EShaderType m_type;
+	private:
+		CShader();
+		CShader(const CShader& other);
 
-	ID3DBlob* m_shaderBlob;
-	ID3D11VertexShader* m_vertexShader;
-	ID3D11PixelShader* m_pixelShader;
+	private:
+		const wchar_t* m_filePath;
+		const char* m_entryPoint;
+		EShaderType m_type;
 
-	CInputLayout* m_pInputLayout;
+		ID3DBlob* m_shaderBlob;
+		ID3D11VertexShader* m_vertexShader;
+		ID3D11PixelShader* m_pixelShader;
 
-	CGraphics* m_pGraphics;
-	CSysWindow* m_pSysWindow;
-};
+		CInputLayout* m_pInputLayout;
 
-void OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, wchar_t* pShaderFilename);
+		CGraphics* m_pGraphics;
+		CSysWindow* m_pSysWindow;
+	};
+
+	void OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, const wchar_t* pShaderFilename);
+}

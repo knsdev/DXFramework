@@ -7,6 +7,8 @@
 #ifdef _DEBUG
 int main()
 {
+	using namespace dxfw;
+
 	try
 	{
 		SAppConfig config = { L"DirectX", 1024, 768, ESysWinMode::Windowed, false, 60 };
@@ -25,6 +27,8 @@ int main()
 #else
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	using namespace dxfw;
+
 	try
 	{
 		//SAppConfig config = { L"DirectX", 1024, 768, ESysWinMode::Windowed, false, 60 };
@@ -40,5 +44,3 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 #endif
-
-

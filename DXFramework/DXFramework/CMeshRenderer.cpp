@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "CMeshRenderer.h"
 
-CMeshRenderer::CMeshRenderer()
+namespace dxfw
 {
-}
+	CMeshRenderer::CMeshRenderer()
+	{
+	}
 
-CMeshRenderer::~CMeshRenderer()
-{
+	CMeshRenderer::~CMeshRenderer()
+	{
+	}
 }

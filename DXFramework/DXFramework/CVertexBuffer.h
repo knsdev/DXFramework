@@ -1,27 +1,31 @@
 #pragma once
 #include "stdafx.h"
-class CGraphics;
 #include "CGraphics.h"
 #include "CSysWindow.h"
 
-class CVertexBuffer
+namespace dxfw
 {
-public:
-	CVertexBuffer(CGraphics* pGraphics, CSysWindow* pSysWindow);
-	~CVertexBuffer();
+	class CGraphics;
 
-	void Create(const void* pData, UINT num, UINT stride, D3D11_USAGE usage, UINT cpuAccessFlags);
-	void Destroy();
-	void Bind(UINT offset = 0);
-	void Unbind();
-	void Update(const void* pData, UINT num, UINT stride);
+	class CVertexBuffer
+	{
+	public:
+		CVertexBuffer(CGraphics* pGraphics, CSysWindow* pSysWindow);
+		~CVertexBuffer();
 
-	UINT GetSize() { return m_num * m_stride; }
+		void Create(const void* pData, UINT num, UINT stride, D3D11_USAGE usage, UINT cpuAccessFlags);
+		void Destroy();
+		void Bind(UINT offset = 0);
+		void Unbind();
+		void Update(const void* pData, UINT num, UINT stride);
 
-private:
-	ID3D11Buffer* m_pBuffer;
-	CGraphics* m_pGraphics;
-	CSysWindow* m_pSysWindow;
-	UINT m_num;
-	UINT m_stride;
-};
+		UINT GetSize() { return m_num * m_stride; }
+
+	private:
+		ID3D11Buffer* m_pBuffer;
+		CGraphics* m_pGraphics;
+		CSysWindow* m_pSysWindow;
+		UINT m_num;
+		UINT m_stride;
+	};
+}

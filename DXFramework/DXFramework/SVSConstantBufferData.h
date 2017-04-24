@@ -1,10 +1,12 @@
 #pragma once
 #include "stdafx.h"
 
-struct SVSConstantBufferData
+namespace dxfw
 {
-	DirectX::XMMATRIX world;
-	DirectX::XMMATRIX view;
-	DirectX::XMMATRIX projection;
-};
-
+	struct SVSConstantBufferData
+	{
+		DirectX::XMMATRIX world;
+		DirectX::XMMATRIX view;
+		DirectX::XMMATRIX projection;
+	};
+}

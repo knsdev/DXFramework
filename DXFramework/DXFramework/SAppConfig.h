@@ -1,19 +1,22 @@
 #pragma once
 #include "stdafx.h"
 
-enum class ESysWinMode
+namespace dxfw
 {
-	Windowed,
-	Borderless,
-	Fullscreen
-};
+	enum class ESysWinMode
+	{
+		Windowed,
+		Borderless,
+		Fullscreen
+	};
 
-struct SAppConfig
-{
-	wchar_t* pWindowName;
-	int width;
-	int height;
-	ESysWinMode mode;
-	bool vsync;
-	UINT numFixedUpdatesPerSecond;
-};
+	struct SAppConfig
+	{
+		wchar_t* pWindowName;
+		int width;
+		int height;
+		ESysWinMode mode;
+		bool vsync;
+		UINT numFixedUpdatesPerSecond;
+	};
+}

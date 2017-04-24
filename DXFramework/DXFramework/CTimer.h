@@ -1,11 +1,14 @@
 #pragma once
 #include "stdafx.h"
 
-class CTimer
+namespace dxfw
 {
-public:
-	CTimer();
-	~CTimer();
+	class CTimer
+	{
+	public:
+		CTimer();
+		~CTimer();
 
-	static double GetSystemTimeInSeconds();
-};
+		static double GetSystemTimeInSeconds();
+	};
+}

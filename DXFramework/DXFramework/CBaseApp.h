@@ -7,47 +7,52 @@
 #include "CTimer.h"
 #include "CMathHelper.h"
 #include "CResourceManager.h"
-class CSceneManager;
 #include "CSceneManager.h"
 #include "CInputManager.h"
 
-class CBaseApp : public ISysWinEventHandler
+namespace dxfw
 {
-public:
-	CBaseApp(const SAppConfig& config);
-	virtual ~CBaseApp();
+	class CSceneManager;
 
-	void Run();
+	class CBaseApp : public ISysWinEventHandler
+	{
+	public:
+		CBaseApp(const SAppConfig& config);
+		virtual ~CBaseApp();
 
-public:
-	// ISysWinEventHandler
-	void OnUpdate() final;
-	virtual void OnResize(bool minimized, int clientWidth, int clientHeight) override;
-	virtual void OnQuit() override;
-	virtual void OnMsgKeyDown(WPARAM wParam, LPARAM lParam) override;
-	virtual void OnMsgKeyUp(WPARAM wParam, LPARAM lParam) override;
+		void Run();
 
-	CGraphics* GetGraphics() { return m_pGraphics.get(); }
-	CSysWindow* GetSysWindow() { return m_pSysWindow.get(); }
-	CResourceManager* GetResourceManager() { return m_pResourceManager.get(); }
-	CSceneManager* GetSceneManager() { return m_pSceneManager.get(); }
-	CInputManager* GetInputManager() { return m_pInputManager.get(); }
+	public:
+		// ISysWinEventHandler
+		void OnUpdate() final;
+		virtual void OnResize(bool minimized, int clientWidth, int clientHeight) override;
+		virtual void OnQuit() override;
+		virtual void OnMsgKeyDown(WPARAM wParam, LPARAM lParam) override;
+		virtual void OnMsgKeyUp(WPARAM wParam, LPARAM lParam) override;
 
-protected:
-	virtual void Start();
-	virtual void Update(float deltaTime);
-	virtual void FixedUpdate(float deltaTime);
-	virtual void Render();
+		CGraphics* GetGraphics() { return m_pGraphics.get(); }
+		CSysWindow* GetSysWindow() { return m_pSysWindow.get(); }
+		CResourceManager* GetResourceManager() { return m_pResourceManager.get(); }
+		CSceneManager* GetSceneManager() { return m_pSceneManager.get(); }
+		CInputManager* GetInputManager() { return m_pInputManager.get(); }
 
-protected:
-	SAppConfig m_config;
-	std::unique_ptr<CSysWindow> m_pSysWindow;
-	std::unique_ptr<CGraphics> m_pGraphics;
-	std::unique_ptr<CResourceManager> m_pResourceManager;
-	std::unique_ptr<CSceneManager> m_pSceneManager;
-	std::unique_ptr<CInputManager> m_pInputManager;
-	
-	double m_prevTime;
-	float m_fixedRenderTimer;
-	float m_fixedUpdateTimer;
-};
+	protected:
+		virtual void Start();
+		virtual void Update(float deltaTime);
+		virtual void FixedUpdate(float deltaTime);
+		virtual void Render();
+
+	protected:
+		SAppConfig m_config;
+		std::unique_ptr<CSysWindow> m_pSysWindow;
+		std::unique_ptr<CGraphics> m_pGraphics;
+		std::unique_ptr<CResourceManager> m_pResourceManager;
+		std::unique_ptr<CSceneManager> m_pSceneManager;
+		std::unique_ptr<CInputManager> m_pInputManager;
+
+		double m_prevTime;
+		float m_fixedRenderTimer;
+		float m_fixedUpdateTimer;
+	};
+}
+

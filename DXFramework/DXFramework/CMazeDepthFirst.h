@@ -1,74 +1,77 @@
 #pragma once
 #include "stdafx.h"
 
-struct SPos
+namespace dxfw
 {
-	int x;
-	int y;
-};
-
-struct SMazeCell
-{
-	bool visited;
-	SPos pos;
-	bool leftWall;
-	bool rightWall;
-	bool topWall;
-	bool bottomWall;
-
-	SMazeCell()
+	struct SPos
 	{
-		visited = false;
-		leftWall = true;
-		rightWall = true;
-		topWall = true;
-		bottomWall = true;
-	}
-};
+		int x;
+		int y;
+	};
 
-struct SMazeParams
-{
-	int width;
-	int height;
-	unsigned int seed;
-};
+	struct SMazeCell
+	{
+		bool visited;
+		SPos pos;
+		bool leftWall;
+		bool rightWall;
+		bool topWall;
+		bool bottomWall;
 
-class CMazeDepthFirst
-{
-public:
-	CMazeDepthFirst();
-	virtual ~CMazeDepthFirst();
+		SMazeCell()
+		{
+			visited = false;
+			leftWall = true;
+			rightWall = true;
+			topWall = true;
+			bottomWall = true;
+		}
+	};
 
-	// Generate a new maze. If used another time, it deletes the old maze and creates a new one.
-	void Generate(const SMazeParams& params);
+	struct SMazeParams
+	{
+		int width;
+		int height;
+		unsigned int seed;
+	};
 
-	// Logs a string representation of the generated maze to the console
-	void ShowDebugMaze(const char* strWall = "o", const char* strField = " ");
+	class CMazeDepthFirst
+	{
+	public:
+		CMazeDepthFirst();
+		virtual ~CMazeDepthFirst();
 
-	// Get a bool array representation of the generated maze.
-	bool* GetBoolArray() { return m_pBoolArray; }
+		// Generate a new maze. If used another time, it deletes the old maze and creates a new one.
+		void Generate(const SMazeParams& params);
 
-	// Get Maze Parameters
-	const SMazeParams& GetParams() { return m_params; }
+		// Logs a string representation of the generated maze to the console
+		void ShowDebugMaze(const char* strWall = "o", const char* strField = " ");
 
-private:
-	void Init();
-	void CleanUp();
-	SMazeCell* GetCell(int x, int y);
-	void FindUnvisitedNeighbors();
-	void VisitCell(SMazeCell* pCell);
-	void CalcBoolArray();
+		// Get a bool array representation of the generated maze.
+		bool* GetBoolArray() { return m_pBoolArray; }
 
-private:
-	SMazeParams m_params;
-	SMazeCell* m_pCells;
+		// Get Maze Parameters
+		const SMazeParams& GetParams() { return m_params; }
 
-	SMazeCell* m_pCurrentCell;
-	int m_visitedCount;
-	int m_totalCount;
+	private:
+		void Init();
+		void CleanUp();
+		SMazeCell* GetCell(int x, int y);
+		void FindUnvisitedNeighbors();
+		void VisitCell(SMazeCell* pCell);
+		void CalcBoolArray();
 
-	std::stack<SMazeCell*> m_backTrack;
-	std::vector<SMazeCell*> m_unvisitedNeighbors;
+	private:
+		SMazeParams m_params;
+		SMazeCell* m_pCells;
 
-	bool* m_pBoolArray;
-};
+		SMazeCell* m_pCurrentCell;
+		int m_visitedCount;
+		int m_totalCount;
+
+		std::stack<SMazeCell*> m_backTrack;
+		std::vector<SMazeCell*> m_unvisitedNeighbors;
+
+		bool* m_pBoolArray;
+	};
+}

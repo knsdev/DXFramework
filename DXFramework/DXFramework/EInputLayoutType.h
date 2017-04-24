@@ -1,11 +1,13 @@
 #pragma once
 #include "stdafx.h"
 
-enum class EInputLayoutType
+namespace dxfw
 {
-	Pos,
-	PosUV,
-	PosUVNormal,
-	NUM
-};
-
+	enum class EInputLayoutType
+	{
+		Pos,
+		PosUV,
+		PosUVNormal,
+		NUM
+	};
+}

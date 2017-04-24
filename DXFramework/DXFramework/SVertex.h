@@ -1,20 +1,23 @@
 #pragma once
 #include "stdafx.h"
 
-struct SVertexPos
+namespace dxfw
 {
-	float pos[3];
-};
+	struct SVertexPos
+	{
+		float pos[3];
+	};
 
-struct SVertexPosUV
-{
-	float pos[3];
-	float uv[2];
-};
+	struct SVertexPosUV
+	{
+		float pos[3];
+		float uv[2];
+	};
 
-struct SVertexPosUVNormal
-{
-	float pos[3];
-	float uv[2];
-	float normal[3];
-};
+	struct SVertexPosUVNormal
+	{
+		float pos[3];
+		float uv[2];
+		float normal[3];
+	};
+}

@@ -1,8 +1,11 @@
 #pragma once
 #include "stdafx.h"
 
-enum class EShaderType
+namespace dxfw
 {
-	VertexShader,
-	PixelShader
-};
+	enum class EShaderType
+	{
+		VertexShader,
+		PixelShader
+	};
+}

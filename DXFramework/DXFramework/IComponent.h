@@ -1,34 +1,38 @@
 #pragma once
 #include "stdafx.h"
-class CGameObject;
 #include "CGameObject.h"
-class CBaseApp;
 
-class IComponent
+namespace dxfw
 {
-public:
-	IComponent();
-	virtual ~IComponent();
+	class CGameObject;
+	class CBaseApp;
 
-	void Init(CGameObject* pGameObject, CBaseApp* pApp);
+	class IComponent
+	{
+	public:
+		IComponent();
+		virtual ~IComponent();
 
-	template<typename T>
-	inline T* GetComponent() { return m_pGameObject->GetComponent<T>(); }
+		void Init(CGameObject* pGameObject, CBaseApp* pApp);
 
-	virtual void Start();
-	virtual void Update(float deltaTime);
-	virtual void FixedUpdate(float deltaTime);
-	virtual void OnDestroy();
-	virtual void OnEnable();
-	virtual void OnDisable();
+		template<typename T>
+		inline T* GetComponent() { return m_pGameObject->GetComponent<T>(); }
 
-	bool IsEnabled() const { return m_enabled; }
-	void SetEnabled(bool enabled) { m_enabled = enabled; }
+		virtual void Start();
+		virtual void Update(float deltaTime);
+		virtual void FixedUpdate(float deltaTime);
+		virtual void OnDestroy();
+		virtual void OnEnable();
+		virtual void OnDisable();
 
-	CBaseApp* GetApp() { return m_pApp; }
+		bool IsEnabled() const { return m_enabled; }
+		void SetEnabled(bool enabled) { m_enabled = enabled; }
 
-protected:
-	CGameObject* m_pGameObject;
-	CBaseApp* m_pApp;
-	bool m_enabled;
-};
+		CBaseApp* GetApp() { return m_pApp; }
+
+	protected:
+		CGameObject* m_pGameObject;
+		CBaseApp* m_pApp;
+		bool m_enabled;
+	};
+}

@@ -4,38 +4,42 @@
 #include "CResourceManager.h"
 #include "CGraphics.h"
 #include "SRenderCommand.h"
-class CBaseApp;
-class CCamera;
 #include "CCamera.h"
 
-typedef std::vector<CGameObject>::iterator IterGameObject;
-
-class CScene
+namespace dxfw
 {
-public:
-	CScene(CResourceManager* pResourceManager, CGraphics* pGraphics, const char* pName, CBaseApp* pApp);
-	CScene(CResourceManager* pResourceManager, CGraphics* pGraphics, const std::vector<CGameObject>& gameObjects, const char* pName, CBaseApp* pApp);
-	~CScene();
+	class CBaseApp;
+	class CCamera;
 
-	void Init();
-	void Start();
-	void OnUnload();
-	void Update(float deltaTime);
-	void FixedUpdate(float deltaTime);
-	void Render();
+	typedef std::vector<CGameObject>::iterator IterGameObject;
 
-	CGameObject& CreateGameObject(const char* pName);
-	CGameObject& CreateGameObject(const char* pName, std::vector<IComponent*> components);
-	void DestroyGameObject(CGameObject& gameObject);
-	CGameObject* FindGameObject(const char* pName);
+	class CScene
+	{
+	public:
+		CScene(CResourceManager* pResourceManager, CGraphics* pGraphics, const char* pName, CBaseApp* pApp);
+		CScene(CResourceManager* pResourceManager, CGraphics* pGraphics, const std::vector<CGameObject>& gameObjects, const char* pName, CBaseApp* pApp);
+		~CScene();
 
-private:
-	void DeleteGameObject(CGameObject& gameObject);
+		void Init();
+		void Start();
+		void OnUnload();
+		void Update(float deltaTime);
+		void FixedUpdate(float deltaTime);
+		void Render();
 
-private:
-	CBaseApp* m_pApp;
-	CGraphics* m_pGraphics;
-	CResourceManager* m_pResourceManager;
-	std::vector<CGameObject> m_gameObjects;
-	std::string m_name;
-};
+		CGameObject& CreateGameObject(const char* pName);
+		CGameObject& CreateGameObject(const char* pName, std::vector<IComponent*> components);
+		void DestroyGameObject(CGameObject& gameObject);
+		CGameObject* FindGameObject(const char* pName);
+
+	private:
+		void DeleteGameObject(CGameObject& gameObject);
+
+	private:
+		CBaseApp* m_pApp;
+		CGraphics* m_pGraphics;
+		CResourceManager* m_pResourceManager;
+		std::vector<CGameObject> m_gameObjects;
+		std::string m_name;
+	};
+}

@@ -1,23 +1,26 @@
 #include "stdafx.h"
 #include "CTimer.h"
 
-CTimer::CTimer()
+namespace dxfw
 {
-}
+	CTimer::CTimer()
+	{
+	}
 
-CTimer::~CTimer()
-{
-}
+	CTimer::~CTimer()
+	{
+	}
 
-double CTimer::GetSystemTimeInSeconds()
-{
-	int64_t frequency;
-	QueryPerformanceFrequency((LARGE_INTEGER*)&frequency);
-	
-	int64_t ticks;
-	QueryPerformanceCounter((LARGE_INTEGER*)&ticks);
+	double CTimer::GetSystemTimeInSeconds()
+	{
+		int64_t frequency;
+		QueryPerformanceFrequency((LARGE_INTEGER*)&frequency);
 
-	double result = ticks / (double)frequency;
+		int64_t ticks;
+		QueryPerformanceCounter((LARGE_INTEGER*)&ticks);
 
-	return result;
+		double result = ticks / (double)frequency;
+
+		return result;
+	}
 }
