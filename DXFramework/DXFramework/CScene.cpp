@@ -156,7 +156,7 @@ namespace dxfw
 		return newObj;
 	}
 
-	CGameObject& CScene::CreateGameObject(const char* pName, std::vector<IComponent*> components)
+	CGameObject& CScene::CreateGameObject(const char* pName, std::map<size_t, IComponent*> components)
 	{
 		m_gameObjects.push_back(CGameObject(pName, components, CMathHelper::GetNewGUID(), m_pApp));
 		CGameObject& newObj = m_gameObjects.back();

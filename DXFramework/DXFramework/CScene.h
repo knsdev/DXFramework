@@ -28,7 +28,7 @@ namespace dxfw
 		void Render();
 
 		CGameObject& CreateGameObject(const char* pName);
-		CGameObject& CreateGameObject(const char* pName, std::vector<IComponent*> components);
+		CGameObject& CreateGameObject(const char* pName, std::map<size_t, IComponent*> components);
 		void DestroyGameObject(CGameObject& gameObject);
 		CGameObject* FindGameObject(const char* pName);
 

@@ -14,7 +14,7 @@ namespace dxfw
 	{
 	}
 
-	CGameObject::CGameObject(const char* pName, std::vector<IComponent*> components, GUID guid, CBaseApp* pApp)
+	CGameObject::CGameObject(const char* pName, std::map<size_t, IComponent*> components, GUID guid, CBaseApp* pApp)
 		:
 		m_name(pName),
 		m_components(components),
@@ -33,9 +33,9 @@ namespace dxfw
 	{
 		for (IterComponent it = m_components.begin(); it != m_components.end(); it++)
 		{
-			if ((*it)->IsEnabled())
+			if (it->second->IsEnabled())
 			{
-				(*it)->Init(this, m_pApp);
+				it->second->Init(this, m_pApp);
 			}
 		}
 	}
@@ -44,9 +44,9 @@ namespace dxfw
 	{
 		for (IterComponent it = m_components.begin(); it != m_components.end(); it++)
 		{
-			if ((*it)->IsEnabled())
+			if (it->second->IsEnabled())
 			{
-				(*it)->Start();
+				it->second->Start();
 			}
 		}
 	}
@@ -55,9 +55,9 @@ namespace dxfw
 	{
 		for (IterComponent it = m_components.begin(); it != m_components.end(); it++)
 		{
-			if ((*it)->IsEnabled())
+			if (it->second->IsEnabled())
 			{
-				(*it)->Update(deltaTime);
+				it->second->Update(deltaTime);
 			}
 		}
 	}
@@ -66,9 +66,9 @@ namespace dxfw
 	{
 		for (IterComponent it = m_components.begin(); it != m_components.end(); it++)
 		{
-			if ((*it)->IsEnabled())
+			if (it->second->IsEnabled())
 			{
-				(*it)->FixedUpdate(deltaTime);
+				it->second->FixedUpdate(deltaTime);
 			}
 		}
 	}
@@ -78,20 +78,7 @@ namespace dxfw
 		m_alive = false;
 		for (IterComponent it = m_components.begin(); it != m_components.end(); it++)
 		{
-			(*it)->OnDestroy();
+			it->second->OnDestroy();
 		}
-	}
-
-	bool CGameObject::RemoveComponent(IComponent* pComponent)
-	{
-		IterComponent it = std::find(m_components.begin(), m_components.end(), pComponent);
-		if (it != m_components.end())
-		{
-			std::swap(*it, m_components.back());
-			m_components.pop_back();
-			delete pComponent;
-			return true;
-		}
-		return false;
 	}
 }

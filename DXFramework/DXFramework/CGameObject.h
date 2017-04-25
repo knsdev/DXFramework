@@ -7,13 +7,13 @@ namespace dxfw
 	class IComponent;
 	class CBaseApp;
 
-	typedef std::vector<IComponent*>::iterator IterComponent;
+	typedef std::map<size_t, IComponent*>::iterator IterComponent;
 
 	class CGameObject
 	{
 	public:
 		CGameObject(const char* pName, GUID guid, CBaseApp* pApp);
-		CGameObject(const char* pName, std::vector<IComponent*> components, GUID guid, CBaseApp* pApp);
+		CGameObject(const char* pName, std::map<size_t, IComponent*> components, GUID guid, CBaseApp* pApp);
 		~CGameObject();
 
 		void Init();
@@ -23,12 +23,13 @@ namespace dxfw
 		void OnDestroy();
 
 		template<typename T>
-		inline T* AddComponent();
-
-		bool RemoveComponent(IComponent* pComponent);
+		T* AddComponent();
 
 		template<typename T>
-		inline T* GetComponent();
+		bool RemoveComponent();
+
+		template<typename T>
+		T* GetComponent();
 
 		const char* GetName() const { return m_name.c_str(); }
 		const GUID GetGUID() const { return m_guid; }
@@ -38,36 +39,62 @@ namespace dxfw
 	private:
 		CBaseApp* m_pApp;
 		std::string m_name;
-		std::vector<IComponent*> m_components;
+		std::map<size_t, IComponent*> m_components; // key = hash of typeid, value = pointer
 		GUID m_guid;
 		bool m_alive;
 		bool m_active;
 	};
 
 	template<typename T>
-	inline T* CGameObject::AddComponent()
+	T* CGameObject::AddComponent()
 	{
-		m_components.push_back(new T());
+		T* pComponent = GetComponent<T>();
 
-		IComponent* pComponent = m_components.back();
+		// If we already added a component of this type ...
+		if (pComponent != nullptr)
+		{
+			// Do not allow to add a second one
+			return pComponent;
+		}
+
+		size_t key = typeid(T).hash_code();
+		pComponent = new T();
+		m_components[key] = pComponent;
+
 		pComponent->Init(this, m_pApp);
 		pComponent->Start();
 		return static_cast<T*>(pComponent);
 	}
 
 	template<typename T>
-	inline T* CGameObject::GetComponent()
+	bool CGameObject::RemoveComponent()
 	{
-		for (IterComponent it = m_components.begin(); it != m_components.end(); it++)
+		size_t key = typeid(T).hash_code();
+		auto it = m_components.find(key);
+
+		if (it != m_components.end())
 		{
-			IComponent* pBase = (*it);
-			T* pDerived = dynamic_cast<T*>(pBase);
-			if (pDerived != nullptr)
-			{
-				return pDerived;
-			}
+			delete it->second;
+			m_components.erase(it);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	template<typename T>
+	T* CGameObject::GetComponent()
+	{
+		size_t key = typeid(T).hash_code();
+		auto it = m_components.find(key);
+
+		if (it != m_components.end())
+		{
+			return static_cast<T*>(it->second);
 		}
 
 		return nullptr;
 	}
+
 }

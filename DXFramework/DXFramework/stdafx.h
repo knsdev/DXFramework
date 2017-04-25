@@ -33,6 +33,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <rpc.h>
+#include <typeinfo>
 
 // Third Party
 #include <FreeImage.h>
