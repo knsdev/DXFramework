@@ -14,6 +14,8 @@ namespace dxfw
 		void Init();
 		void RunMessageLoop();
 
+		static void Quit();
+
 		const std::wstring& GetWindowName() const { return m_windowName; }
 		int GetClientWidth() const { return m_clientWidth; }
 		int GetClientHeight() const { return m_clientHeight; }

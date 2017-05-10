@@ -90,6 +90,11 @@ namespace dxfw
 		Misc6,
 		Misc7,
 		Misc10,
+		MouseButtonLeft,
+		MouseButtonRight,
+		MouseButtonMiddle,
+		MouseButton1,
+		MouseButton2,
 		NUM_KEYS_TOTAL
 	};
 

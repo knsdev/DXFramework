@@ -16,8 +16,8 @@ namespace dxfw
 	{
 		UINT keyIndex = 0;
 
-		// 0 = first key down
-		// 1 = repeat down
+		// 0 = first key down event
+		// 1 = repeated key down event
 		bool prevKeyState = ((lParam >> 30) & 0x00000001);
 		if (prevKeyState == true)
 		{
@@ -26,8 +26,8 @@ namespace dxfw
 
 		if (GetKeyIndex(wParam, keyIndex))
 		{
-			m_keyStates[keyIndex] = true;
-			printf("key down %u\n", keyIndex);
+			UpdateKeyState(keyIndex, true);
+			//printf("key down %u\n", keyIndex);
 		}
 	}
 
@@ -37,9 +37,32 @@ namespace dxfw
 
 		if (GetKeyIndex(wParam, keyIndex))
 		{
-			m_keyStates[keyIndex] = false;
-			printf("key up %u\n", keyIndex);
+			UpdateKeyState(keyIndex, false);
+			//printf("key up %u\n", keyIndex);
 		}
+	}
+
+	void CInputManager::OnMsgMouseMove(WPARAM wParam, LPARAM lParam)
+	{
+	}
+
+	void CInputManager::OnMsgMouseButtonDown(WPARAM wParam, LPARAM lParam, EKeyCode keyCode)
+	{
+		UINT keyIndex = (UINT)keyCode;
+		UpdateKeyState(keyIndex, true);
+	}
+
+	void CInputManager::OnMsgMouseButtonUp(WPARAM wParam, LPARAM lParam, EKeyCode keyCode)
+	{
+		UINT keyIndex = (UINT)keyCode;
+		UpdateKeyState(keyIndex, false);
+	}
+
+	POINT CInputManager::GetMousePosition()
+	{
+		POINT p;
+		GetCursorPos(&p);
+		return p;
 	}
 
 	bool CInputManager::GetKeyIndex(WPARAM wParam, UINT& keyIndex)
@@ -197,5 +220,11 @@ namespace dxfw
 		// TODO: Setup missing keys
 
 		return false;
+	}
+
+	void CInputManager::UpdateKeyState(UINT keyIndex, bool state)
+	{
+		m_keyStatesPrev[keyIndex] = m_keyStates[keyIndex];
+		m_keyStates[keyIndex] = state;
 	}
 }

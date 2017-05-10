@@ -14,7 +14,8 @@ namespace dxfw
 		void Start() override;
 		void Update(float deltaTime) override;
 
-		void SetProjectionMatrix(float fovAngleY, float aspectRatio, float nearZ = 1.0f, float farZ = 1000.0f);
+		void SetProjectionMatrixPerspective(float fovAngleY, float aspectRatio, float nearZ = 1.0f, float farZ = 1000.0f);
+		void SetProjectionMatrixOrtho(float width, float height, float nearZ = 1.0f, float farZ = 1000.0f);
 
 		DirectX::XMFLOAT4X4* GetViewMatrix() { return &m_viewMatrix; }
 		DirectX::XMFLOAT4X4* GetProjectionMatrix() { return &m_projectionMatrix; }

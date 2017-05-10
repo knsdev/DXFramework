@@ -185,6 +185,7 @@
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CCameraMovement.h" />
     <ClInclude Include="CInputManager.h" />
+    <ClInclude Include="CLog.h" />
     <ClInclude Include="CMeshRenderer.h" />
     <ClInclude Include="CTestScript.h" />
     <ClInclude Include="EKeyCode.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="CIndexBuffer.cpp" />
     <ClCompile Include="CInputLayout.cpp" />
     <ClCompile Include="CInputManager.cpp" />
+    <ClCompile Include="CLog.cpp" />
     <ClCompile Include="CMathHelper.cpp" />
     <ClCompile Include="CMeshRenderer.cpp" />
     <ClCompile Include="CResourceManager.cpp" />

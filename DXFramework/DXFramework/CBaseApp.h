@@ -29,6 +29,9 @@ namespace dxfw
 		virtual void OnQuit() override;
 		virtual void OnMsgKeyDown(WPARAM wParam, LPARAM lParam) override;
 		virtual void OnMsgKeyUp(WPARAM wParam, LPARAM lParam) override;
+		virtual void OnMsgMouseMove(WPARAM wParam, LPARAM lParam) override;
+		virtual void OnMsgMouseButtonDown(WPARAM wParam, LPARAM lParam, EKeyCode keyCode) override;
+		virtual void OnMsgMouseButtonUp(WPARAM wParam, LPARAM lParam, EKeyCode keyCode) override;
 
 		CGraphics* GetGraphics() { return m_pGraphics.get(); }
 		CSysWindow* GetSysWindow() { return m_pSysWindow.get(); }

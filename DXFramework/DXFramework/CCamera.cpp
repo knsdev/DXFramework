@@ -26,10 +26,16 @@ namespace dxfw
 		UpdateViewMatrix();
 	}
 
-	void CCamera::SetProjectionMatrix(float fovAngleY, float aspectRatio, float nearZ, float farZ)
+	void CCamera::SetProjectionMatrixPerspective(float fovAngleY, float aspectRatio, float nearZ, float farZ)
 	{
-		DirectX::XMMATRIX mat_proj = DirectX::XMMatrixPerspectiveFovLH(fovAngleY, aspectRatio, nearZ, farZ);
-		DirectX::XMStoreFloat4x4(&m_projectionMatrix, mat_proj);
+		DirectX::XMMATRIX perspectiveMatrix = DirectX::XMMatrixPerspectiveFovLH(fovAngleY, aspectRatio, nearZ, farZ);
+		DirectX::XMStoreFloat4x4(&m_projectionMatrix, perspectiveMatrix);
+	}
+
+	void CCamera::SetProjectionMatrixOrtho(float width, float height, float nearZ, float farZ)
+	{
+		DirectX::XMMATRIX orthoMatrix = DirectX::XMMatrixOrthographicLH(width, height, nearZ, farZ);
+		DirectX::XMStoreFloat4x4(&m_projectionMatrix, orthoMatrix);
 	}
 
 	void CCamera::UpdateViewMatrix()

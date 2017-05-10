@@ -34,7 +34,8 @@ namespace dxfw
 			CTransform* pTrans = obj.AddComponent<CTransform>();
 			pTrans->SetWorldMatrix(DirectX::XMMatrixIdentity() * DirectX::XMMatrixTranslation(5, 5, 0));
 			CCamera* camera = obj.AddComponent<CCamera>();
-			camera->SetProjectionMatrix(DirectX::XM_PI / 2.0f, (float)m_pSysWindow->GetClientWidth() / (float)m_pSysWindow->GetClientHeight());
+			camera->SetProjectionMatrixPerspective(DirectX::XM_PI / 2.0f, (float)m_pSysWindow->GetClientWidth() / (float)m_pSysWindow->GetClientHeight());
+			//camera->SetProjectionMatrixOrtho(24, 24);
 			obj.AddComponent<CCameraMovement>();
 		}
 
@@ -103,6 +104,11 @@ namespace dxfw
 	void CTestApp::Update(float deltaTime)
 	{
 		CBaseApp::Update(deltaTime);
+
+		if (m_pInputManager->IsKeyDown(EKeyCode::Escape))
+		{
+			m_pSysWindow->Quit();
+		}
 	}
 
 	void CTestApp::FixedUpdate(float deltaTime)

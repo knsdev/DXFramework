@@ -81,6 +81,21 @@ namespace dxfw
 		m_pInputManager->OnMsgKeyUp(wParam, lParam);
 	}
 
+	void CBaseApp::OnMsgMouseMove(WPARAM wParam, LPARAM lParam)
+	{
+		m_pInputManager->OnMsgMouseMove(wParam, lParam);
+	}
+
+	void CBaseApp::OnMsgMouseButtonDown(WPARAM wParam, LPARAM lParam, EKeyCode keyCode)
+	{
+		m_pInputManager->OnMsgMouseButtonDown(wParam, lParam, keyCode);
+	}
+
+	void CBaseApp::OnMsgMouseButtonUp(WPARAM wParam, LPARAM lParam, EKeyCode keyCode)
+	{
+		m_pInputManager->OnMsgMouseButtonUp(wParam, lParam, keyCode);
+	}
+
 	void CBaseApp::Start()
 	{
 	}

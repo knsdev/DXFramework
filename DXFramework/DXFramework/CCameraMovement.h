@@ -13,10 +13,13 @@ namespace dxfw
 		virtual ~CCameraMovement();
 
 		void Start() override;
-		void Update(float deltaTime) override;
+		void FixedUpdate(float deltaTime) override;
+
+	private:
+		void SetMouseCursorToCenter();
 
 	private:
 		CTransform* m_pTransform;
-		DirectX::XMFLOAT4X4 m_initWorldMatrix;
+		POINT m_mousePos = { 0, 0 };
 	};
 }

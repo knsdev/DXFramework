@@ -36,7 +36,7 @@ namespace dxfw
 		DirectX::XMVECTOR rotationQuat;
 		DirectX::XMVECTOR scale;
 		DirectX::XMMatrixDecompose(&scale, &rotationQuat, &pos, matrix);
-		return pos;
+		return rotationQuat;
 	}
 
 	DirectX::XMVECTOR CTransform::GetScale()
@@ -73,24 +73,60 @@ namespace dxfw
 		DirectX::XMStoreFloat4x4(&m_worldMatrix, worldMatrix);
 	}
 
-	void CTransform::RotateAroundX(float angle)
+	void CTransform::RotateAroundXLocal(float angle)
 	{
 		DirectX::XMMATRIX worldMatrix = DirectX::XMLoadFloat4x4(&m_worldMatrix);
 		worldMatrix = DirectX::XMMatrixRotationX(angle) * worldMatrix;
 		DirectX::XMStoreFloat4x4(&m_worldMatrix, worldMatrix);
 	}
 
-	void CTransform::RotateAroundY(float angle)
+	void CTransform::RotateAroundYLocal(float angle)
 	{
 		DirectX::XMMATRIX worldMatrix = DirectX::XMLoadFloat4x4(&m_worldMatrix);
 		worldMatrix = DirectX::XMMatrixRotationY(angle) * worldMatrix;
 		DirectX::XMStoreFloat4x4(&m_worldMatrix, worldMatrix);
 	}
 
-	void CTransform::RotateAroundZ(float angle)
+	void CTransform::RotateAroundZLocal(float angle)
 	{
 		DirectX::XMMATRIX worldMatrix = DirectX::XMLoadFloat4x4(&m_worldMatrix);
 		worldMatrix = DirectX::XMMatrixRotationZ(angle) * worldMatrix;
+		DirectX::XMStoreFloat4x4(&m_worldMatrix, worldMatrix);
+	}
+
+	void CTransform::RotateAroundAxis(const DirectX::XMFLOAT3& axis, float angle, bool relativeToLocal)
+	{
+		DirectX::XMMATRIX worldMatrix = DirectX::XMLoadFloat4x4(&m_worldMatrix);
+
+		if (relativeToLocal)
+		{
+			DirectX::XMVECTOR axisVec = DirectX::XMVector3Normalize(XMLoadFloat3(&axis));
+			DirectX::XMMATRIX rotMat = DirectX::XMMatrixRotationNormal(axisVec, angle);
+
+			worldMatrix = rotMat * worldMatrix;
+		}
+		else
+		{
+			// get rotation from worldMatrix
+			DirectX::XMVECTOR rotQuat = GetRotationQuat();
+
+			// calculate delta rotation from axis and angle
+			DirectX::XMVECTOR axisVec = DirectX::XMVector3Normalize(XMLoadFloat3(&axis));
+			DirectX::XMVECTOR rotQuatDelta = DirectX::XMQuaternionRotationAxis(axisVec, angle);
+
+			// multiply current rotation by delta rotation
+			DirectX::XMVECTOR rotQuatResult = DirectX::XMQuaternionMultiply(rotQuat, rotQuatDelta);
+
+			// convert to matrix
+			DirectX::XMMATRIX rotMatResult = DirectX::XMMatrixRotationQuaternion(rotQuatResult);
+
+			// keep position
+			rotMatResult.r[3] = worldMatrix.r[3];
+
+			// set rotation of worldMatrix
+			worldMatrix = rotMatResult;
+		}
+
 		DirectX::XMStoreFloat4x4(&m_worldMatrix, worldMatrix);
 	}
 }

@@ -20,22 +20,57 @@ namespace dxfw
 			DestroyWindow(hwnd);
 			return 0;
 		case WM_DESTROY:
-			m_pEventHandler->OnQuit();
-			PostQuitMessage(0);
-			m_quit = true;
+			Quit();
 			return 0;
 		case WM_SIZE:
 			m_clientWidth = LOWORD(lParam);
 			m_clientHeight = HIWORD(lParam);
 			m_pEventHandler->OnResize(wParam == SIZE_MINIMIZED, m_clientWidth, m_clientHeight);
 			return 0;
-		case WM_LBUTTONDOWN:
-		{
-			int mx = GET_X_LPARAM(lParam);
-			int my = GET_Y_LPARAM(lParam);
-			//printf_s("WM_LBUTTONDOWN: MousePos = (%d | %d)\n", mx, my);
+		case WM_MOUSEMOVE:
+			m_pEventHandler->OnMsgMouseMove(wParam, lParam);
 			return 0;
+		case WM_LBUTTONDOWN:
+			m_pEventHandler->OnMsgMouseButtonDown(wParam, lParam, EKeyCode::MouseButtonLeft);
+			return 0;
+		case WM_RBUTTONDOWN:
+			m_pEventHandler->OnMsgMouseButtonDown(wParam, lParam, EKeyCode::MouseButtonRight);
+			return 0;
+		case WM_MBUTTONDOWN:
+			m_pEventHandler->OnMsgMouseButtonDown(wParam, lParam, EKeyCode::MouseButtonMiddle);
+			return 0;
+		case WM_XBUTTONDOWN:
+			if (wParam & MK_XBUTTON1)
+			{
+				m_pEventHandler->OnMsgMouseButtonDown(wParam, lParam, EKeyCode::MouseButton1);
+			}
+			else if (wParam & MK_XBUTTON2)
+			{
+				m_pEventHandler->OnMsgMouseButtonDown(wParam, lParam, EKeyCode::MouseButton2);
+			}
+			return 0;
+		case WM_LBUTTONUP:
+			m_pEventHandler->OnMsgMouseButtonUp(wParam, lParam, EKeyCode::MouseButtonLeft);
+			return 0;
+		case WM_RBUTTONUP:
+			m_pEventHandler->OnMsgMouseButtonUp(wParam, lParam, EKeyCode::MouseButtonRight);
+			return 0;
+		case WM_MBUTTONUP:
+			m_pEventHandler->OnMsgMouseButtonUp(wParam, lParam, EKeyCode::MouseButtonMiddle);
+			return 0;
+		case WM_XBUTTONUP:
+		{
+			UINT button = GET_XBUTTON_WPARAM(wParam);
+			if (button == XBUTTON1)
+			{
+				m_pEventHandler->OnMsgMouseButtonUp(wParam, lParam, EKeyCode::MouseButton1);
+			}
+			else if (button == XBUTTON2)
+			{
+				m_pEventHandler->OnMsgMouseButtonUp(wParam, lParam, EKeyCode::MouseButton2);
+			}
 		}
+			return 0;
 		case WM_KEYDOWN:
 		{
 			//printf("VK: %x\n", wParam);
@@ -144,5 +179,12 @@ namespace dxfw
 				m_pEventHandler->OnUpdate();
 			}
 		}
+	}
+
+	void CSysWindow::Quit()
+	{
+		m_quit = true;
+		m_pEventHandler->OnQuit();
+		PostQuitMessage(0);
 	}
 }

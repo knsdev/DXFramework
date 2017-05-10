@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "IComponent.h"
+#include "CLog.h"
 
 namespace dxfw
 {
@@ -19,9 +20,12 @@ namespace dxfw
 		DirectX::XMVECTOR GetScale();
 
 		void Translate(DirectX::XMVECTOR translation, bool relativeToLocal);
-		void RotateAroundX(float angle);
-		void RotateAroundY(float angle);
-		void RotateAroundZ(float angle);
+		
+		void RotateAroundXLocal(float angle);
+		void RotateAroundYLocal(float angle);
+		void RotateAroundZLocal(float angle);
+		
+		void RotateAroundAxis(const DirectX::XMFLOAT3& axis, float angle, bool relativeToLocal);
 
 	private:
 		DirectX::XMFLOAT4X4 m_worldMatrix;
