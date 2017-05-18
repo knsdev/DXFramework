@@ -39,6 +39,7 @@ namespace dxfw
 		float fixedDeltaTime = 1.0f / (float)m_config.numFixedUpdatesPerSecond;
 
 		double currentTime = CTimer::GetSystemTimeInSeconds();
+		double frameStartTime = currentTime;
 		float deltaTime = (float)(currentTime - m_prevTime);
 		deltaTime = CMathHelper::Clamp(deltaTime, 0.0f, maxTimeStep);
 		m_prevTime = currentTime;
@@ -59,6 +60,12 @@ namespace dxfw
 			Render();
 			m_pGraphics->BeginDraw();
 			m_pGraphics->EndDraw();
+		}
+
+		// Wait until correct time per frame is reached
+		while (currentTime - frameStartTime < maxTimeStep)
+		{
+			currentTime = CTimer::GetSystemTimeInSeconds();
 		}
 	}
 
